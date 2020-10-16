@@ -10,16 +10,13 @@ import com.squareup.workflow1.StatelessWorkflow
  */
 object StanzaListWorkflow : StatelessWorkflow<Poem, Int, StanzaListRendering>() {
 
-  override fun render(
-    props: Poem,
-    context: RenderContext
-  ): StanzaListRendering {
+  override fun RenderContext.render(): StanzaListRendering {
     return StanzaListRendering(
         title = props.title,
         subtitle = props.poet.fullName,
         firstLines = props.initialStanzas,
-        onStanzaSelected = context.eventHandler { index -> setOutput(index) },
-        onExit = context.eventHandler { setOutput(-1) }
+        onStanzaSelected = eventHandler { index -> setOutput(index) },
+        onExit = eventHandler { setOutput(-1) }
     )
   }
 }

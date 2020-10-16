@@ -28,7 +28,10 @@ abstract class StatelessWorkflow<in PropsT, out OutputT, out RenderingT> :
     val props: @UnsafeVariance PropsT,
     baseContext: BaseRenderContext<PropsT, *, OutputT>
   ) : BaseRenderContext<@UnsafeVariance PropsT, Nothing, @UnsafeVariance OutputT> by
-  baseContext as BaseRenderContext<PropsT, Nothing, OutputT>
+  baseContext as BaseRenderContext<PropsT, Nothing, OutputT> {
+    @Deprecated("context is implicit, delete this", ReplaceWith("this"))
+    val context = this
+  }
 
   @Suppress("UNCHECKED_CAST")
   private val statefulWorkflow = Workflow.stateful<PropsT, Unit, OutputT, RenderingT>(

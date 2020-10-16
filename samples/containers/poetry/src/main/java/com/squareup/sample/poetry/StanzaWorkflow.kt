@@ -22,27 +22,24 @@ object StanzaWorkflow : StatelessWorkflow<Props, Output, StanzaRendering>() {
     ShowNextStanza
   }
 
-  override fun render(
-    props: Props,
-    context: RenderContext
-  ): StanzaRendering {
+  override fun RenderContext.render(): StanzaRendering {
     with(props) {
       val onGoBack: (() -> Unit)? = when (index) {
         0 -> null
         else -> {
-          context.eventHandler { setOutput(ShowPreviousStanza) }
+          eventHandler { setOutput(ShowPreviousStanza) }
         }
       }
 
       val onGoForth: (() -> Unit)? = when (index) {
         poem.stanzas.size - 1 -> null
         else -> {
-          context.eventHandler { setOutput(ShowNextStanza) }
+          eventHandler { setOutput(ShowNextStanza) }
         }
       }
 
       return StanzaRendering(
-          onGoUp = context.eventHandler { setOutput(CloseStanzas) },
+          onGoUp = eventHandler { setOutput(CloseStanzas) },
           title = poem.title,
           stanzaNumber = index + 1,
           lines = poem.stanzas[index],

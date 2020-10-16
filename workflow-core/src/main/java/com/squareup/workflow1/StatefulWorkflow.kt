@@ -74,7 +74,10 @@ abstract class StatefulWorkflow<
     val props: @UnsafeVariance PropsT,
     val state: StateT,
     baseContext: BaseRenderContext<PropsT, StateT, OutputT>
-  ) : BaseRenderContext<@UnsafeVariance PropsT, StateT, @UnsafeVariance OutputT> by baseContext
+  ) : BaseRenderContext<@UnsafeVariance PropsT, StateT, @UnsafeVariance OutputT> by baseContext {
+    @Deprecated("context is implicit, delete this", ReplaceWith("this"))
+    val context = this
+  }
 
   /**
    * Called from [RenderContext.renderChild] when the state machine is first started, to get the

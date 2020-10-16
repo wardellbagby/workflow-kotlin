@@ -8,13 +8,10 @@ import com.squareup.workflow1.StatelessWorkflow
  */
 object PoemListWorkflow : StatelessWorkflow<List<Poem>, Int, PoemListRendering>() {
 
-  override fun render(
-    props: List<Poem>,
-    context: RenderContext
-  ): PoemListRendering {
+  override fun RenderContext.render(): PoemListRendering {
     return PoemListRendering(
         poems = props,
-        onPoemSelected = context.eventHandler { index -> setOutput(index) }
+        onPoemSelected = eventHandler { index -> setOutput(index) }
     )
   }
 }
