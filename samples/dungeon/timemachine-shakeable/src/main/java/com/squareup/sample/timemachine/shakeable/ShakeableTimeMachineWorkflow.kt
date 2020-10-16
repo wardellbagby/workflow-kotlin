@@ -1,18 +1,3 @@
-/*
- * Copyright 2019 Square Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.squareup.sample.timemachine.shakeable
 
 import android.content.Context
@@ -65,13 +50,11 @@ class ShakeableTimeMachineWorkflow<in P, O : Any, out R : Any>(
 
   override fun snapshotState(state: State): Snapshot? = null
 
-  override fun render(
-    props: PropsFactory<P>,
-    state: State,
-    context: RenderContext
-  ): ShakeableTimeMachineRendering {
+  override fun RenderContext.render(): ShakeableTimeMachineRendering {
+    val state = state
+
     // Only listen to shakes when recording.
-    if (state === Recording) context.runningWorker(shakeWorker) { onShake }
+    if (state === Recording) runningWorker(shakeWorker) { onShake }
 
     val delegateProps = props.createDelegateProps(state === Recording)
 
@@ -81,7 +64,7 @@ class ShakeableTimeMachineWorkflow<in P, O : Any, out R : Any>(
     }
 
     val timeMachineRendering =
-      context.renderChild(timeMachineWorkflow, timeMachineProps) { output: O ->
+      renderChild(timeMachineWorkflow, timeMachineProps) { output: O ->
         forwardOutput(output)
       }
 
@@ -101,7 +84,7 @@ class ShakeableTimeMachineWorkflow<in P, O : Any, out R : Any>(
             { _ -> }
           }
           is PlayingBack -> {
-            { position -> context.actionSink.send(SeekAction(position)) }
+            { position -> actionSink.send(SeekAction(position)) }
           }
         },
         onResumeRecording = when (state) {
@@ -110,7 +93,7 @@ class ShakeableTimeMachineWorkflow<in P, O : Any, out R : Any>(
             {}
           }
           is PlayingBack -> {
-            { context.actionSink.send(ResumeRecordingAction()) }
+            { actionSink.send(ResumeRecordingAction()) }
           }
         }
     )

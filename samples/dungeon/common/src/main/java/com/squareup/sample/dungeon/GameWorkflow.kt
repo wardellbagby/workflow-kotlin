@@ -1,18 +1,3 @@
-/*
- * Copyright 2019 Square Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.squareup.sample.dungeon
 
 import com.squareup.sample.dungeon.ActorWorkflow.ActorProps
@@ -30,7 +15,6 @@ import com.squareup.sample.dungeon.GameWorkflow.State
 import com.squareup.sample.dungeon.PlayerWorkflow.Rendering
 import com.squareup.sample.dungeon.board.Board
 import com.squareup.sample.dungeon.board.Board.Location
-import com.squareup.workflow1.RenderContext
 import com.squareup.workflow1.Snapshot
 import com.squareup.workflow1.StatefulWorkflow
 import com.squareup.workflow1.Worker
@@ -103,11 +87,7 @@ class GameWorkflow(
     return state
   }
 
-  override fun render(
-    props: Props,
-    state: State,
-    context: RenderContext
-  ): GameRendering {
+  override fun RenderContext.render(): GameRendering {
     val running = !props.paused && !state.game.isPlayerEaten
     // Stop actors from ticking if the game is paused or finished.
     val ticker: Worker<Long> =
@@ -117,18 +97,18 @@ class GameWorkflow(
 
     // Render the player.
     val playerInput = ActorProps(board, game.playerLocation, ticker)
-    val playerRendering = context.renderChild(playerWorkflow, playerInput)
+    val playerRendering = renderChild(playerWorkflow, playerInput)
 
     // Render all the other actors.
     val aiRenderings = aiWorkflows.zip(game.aiLocations)
         .mapIndexed { index, (aiWorkflow, aiLocation) ->
           val aiInput = ActorProps(board, aiLocation, ticker)
-          aiLocation to context.renderChild(aiWorkflow, aiInput, key = index.toString())
+          aiLocation to renderChild(aiWorkflow, aiInput, key = index.toString())
         }
 
     // If the game is paused or finished, just render the board without ticking.
     if (running) {
-      context.runningWorker(ticker) { tick ->
+      runningWorker(ticker) { tick ->
         return@runningWorker updateGame(
             props.ticksPerSecond, tick, game, playerRendering, board, aiRenderings
         )

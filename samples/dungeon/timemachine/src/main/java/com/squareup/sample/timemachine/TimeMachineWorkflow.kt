@@ -1,18 +1,3 @@
-/*
- * Copyright 2019 Square Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.squareup.sample.timemachine
 
 import com.squareup.sample.timemachine.RecorderWorkflow.RecorderProps.PlaybackAt
@@ -20,7 +5,6 @@ import com.squareup.sample.timemachine.RecorderWorkflow.RecorderProps.RecordValu
 import com.squareup.sample.timemachine.TimeMachineWorkflow.TimeMachineProps
 import com.squareup.sample.timemachine.TimeMachineWorkflow.TimeMachineProps.PlayingBackAt
 import com.squareup.sample.timemachine.TimeMachineWorkflow.TimeMachineProps.Recording
-import com.squareup.workflow1.RenderContext
 import com.squareup.workflow1.StatelessWorkflow
 import com.squareup.workflow1.Workflow
 import com.squareup.workflow1.action
@@ -82,20 +66,17 @@ class TimeMachineWorkflow<P, O : Any, out R>(
 
   private val recordingWorkflow = RecorderWorkflow<R>(clock)
 
-  override fun render(
-    props: TimeMachineProps<P>,
-    context: RenderContext
-  ): TimeMachineRendering<R> {
+  override fun RenderContext.render(): TimeMachineRendering<R> {
     // Always render the delegate, even if in playback mode, to keep it alive.
     val delegateRendering =
-      context.renderChild(delegateWorkflow, props.delegateProps) { forwardOutput(it) }
+      renderChild(delegateWorkflow, props.delegateProps) { forwardOutput(it) }
 
-    val recorderProps = when (props) {
+    val recorderProps = when (val props = props) {
       is Recording -> RecordValue(delegateRendering)
       is PlayingBackAt -> PlaybackAt(props.timestamp)
     }
 
-    return context.renderChild(recordingWorkflow, recorderProps)
+    return renderChild(recordingWorkflow, recorderProps)
   }
 
   private fun forwardOutput(output: O) = action { setOutput(output) }

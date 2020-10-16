@@ -15,6 +15,7 @@ import com.squareup.workflow1.Snapshot
 import com.squareup.workflow1.StatefulWorkflow
 import com.squareup.workflow1.WorkflowAction
 import com.squareup.workflow1.WorkflowAction.Companion.noAction
+import com.squareup.workflow1.action
 import com.squareup.workflow1.parse
 import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 import com.squareup.workflow1.ui.backstack.BackStackScreen
@@ -37,6 +38,8 @@ object PoemWorkflow : StatefulWorkflow<Poem, Int, ClosePoem, OverviewDetailScree
 
   @OptIn(WorkflowUiExperimentalApi::class)
   override fun RenderContext.render(): OverviewDetailScreen {
+    val state = state
+
     val previousStanzas: List<StanzaRendering> =
       if (state == -1) emptyList()
       else props.stanzas.subList(0, state)
@@ -52,7 +55,7 @@ object PoemWorkflow : StatefulWorkflow<Poem, Int, ClosePoem, OverviewDetailScree
             StanzaWorkflow, Props(props, state), "$state"
         ) {
           when (it) {
-            CloseStanzas -> ClearSelection
+            CloseStanzas -> action { state = -1 }
             ShowPreviousStanza -> SelectPrevious
             ShowNextStanza -> SelectNext
           }

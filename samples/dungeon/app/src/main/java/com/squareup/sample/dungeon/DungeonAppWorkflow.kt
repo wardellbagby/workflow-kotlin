@@ -53,28 +53,24 @@ class DungeonAppWorkflow(
     snapshot: Snapshot?
   ): State = LoadingBoardList
 
-  override fun render(
-    props: Props,
-    state: State,
-    context: RenderContext
-  ): AlertContainerScreen<Any> = when (state) {
+  override fun RenderContext.render(): AlertContainerScreen<Any> = when (val state = state) {
 
     LoadingBoardList -> {
-      context.runningWorker(boardLoader.loadAvailableBoards()) { displayBoards(it) }
+      runningWorker(boardLoader.loadAvailableBoards()) { displayBoards(it) }
       AlertContainerScreen(state)
     }
 
     is ChoosingBoard -> {
       val screen = DisplayBoardsListScreen(
           boards = state.boards.map { it.second },
-          onBoardSelected = { index -> context.actionSink.send(selectBoard(index)) }
+          onBoardSelected = { index -> actionSink.send(selectBoard(index)) }
       )
       AlertContainerScreen(screen)
     }
 
     is PlayingGame -> {
       val sessionProps = GameSessionWorkflow.Props(state.boardPath, props.paused)
-      val gameScreen = context.renderChild(gameSessionWorkflow, sessionProps)
+      val gameScreen = renderChild(gameSessionWorkflow, sessionProps)
       gameScreen
     }
   }
