@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.Workflow
 import com.squareup.workflow1.WorkflowInterceptor
 import com.squareup.workflow1.ui.WorkflowRunner.Config
@@ -44,7 +43,7 @@ public interface WorkflowRunner<out OutputT> {
    * @param interceptors An optional list of [WorkflowInterceptor]s that will wrap every workflow
    * rendered by the runtime.
    */
-  @OptIn(ExperimentalCoroutinesApi::class, ExperimentalWorkflowApi::class)
+  @OptIn(ExperimentalCoroutinesApi::class)
   public class Config<PropsT, OutputT>(
     public val workflow: Workflow<PropsT, OutputT, Any>,
     public val props: StateFlow<PropsT>,
@@ -68,7 +67,6 @@ public interface WorkflowRunner<out OutputT> {
      * @param interceptors An optional list of [WorkflowInterceptor]s that will wrap every workflow
      * rendered by the runtime.
      */
-    @OptIn(ExperimentalWorkflowApi::class)
     @Suppress("FunctionName")
     public fun <OutputT> Config(
       workflow: Workflow<Unit, OutputT, Any>,

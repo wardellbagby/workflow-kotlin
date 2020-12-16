@@ -11,7 +11,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-@OptIn(ExperimentalStdlibApi::class, ExperimentalWorkflowApi::class)
+@OptIn(ExperimentalStdlibApi::class)
 class TreeSnapshotTest {
 
   @Test fun `overrides equals`() {

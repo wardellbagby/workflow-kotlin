@@ -1,6 +1,5 @@
 package com.squareup.workflow1.testing
 
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.StatefulWorkflow
 import com.squareup.workflow1.Workflow
 import com.squareup.workflow1.WorkflowAction
@@ -365,7 +364,6 @@ public abstract class RenderTester<PropsT, StateT, OutputT, RenderingT> {
  * messages.
  */
 @Suppress("NOTHING_TO_INLINE")
-@ExperimentalWorkflowApi
 /* ktlint-disable parameter-list-wrapping */
 public inline fun <ChildRenderingT, PropsT, StateT, OutputT, RenderingT>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorkflow(
@@ -425,7 +423,6 @@ public inline fun <ChildRenderingT, PropsT, StateT, OutputT, RenderingT>
  * @param description Optional string that will be used to describe this expectation in error
  * messages.
  */
-@ExperimentalWorkflowApi
 /* ktlint-disable parameter-list-wrapping */
 public fun <ChildOutputT, ChildRenderingT, PropsT, StateT, OutputT, RenderingT>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorkflow(
@@ -501,7 +498,6 @@ public fun <ChildOutputT, ChildRenderingT, PropsT, StateT, OutputT, RenderingT>
  * @param description Optional string that will be used to describe this expectation in error
  * messages.
  */
-@OptIn(ExperimentalWorkflowApi::class)
 /* ktlint-disable parameter-list-wrapping */
 public inline fun <ChildPropsT, ChildOutputT, ChildRenderingT, PropsT, StateT, OutputT, RenderingT>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorkflow(

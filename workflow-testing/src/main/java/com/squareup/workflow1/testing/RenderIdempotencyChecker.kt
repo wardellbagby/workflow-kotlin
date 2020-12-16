@@ -1,7 +1,6 @@
 package com.squareup.workflow1.testing
 
 import com.squareup.workflow1.BaseRenderContext
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.RenderContext
 import com.squareup.workflow1.Sink
 import com.squareup.workflow1.Workflow
@@ -17,7 +16,6 @@ import java.util.LinkedList
  * The first render pass is the real one, the second one is a no-op and child workflow renderings
  * will be played back, in order, to their renderChild calls.
  */
-@OptIn(ExperimentalWorkflowApi::class)
 public object RenderIdempotencyChecker : WorkflowInterceptor {
   override fun <P, S, O, R> onRender(
     props: P,

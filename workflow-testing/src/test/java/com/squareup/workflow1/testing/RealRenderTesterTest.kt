@@ -1,7 +1,6 @@
 package com.squareup.workflow1.testing
 
 import com.nhaarman.mockito_kotlin.mock
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.ImpostorWorkflow
 import com.squareup.workflow1.LifecycleWorker
 import com.squareup.workflow1.Sink
@@ -38,7 +37,7 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-@OptIn(ExperimentalWorkflowApi::class, ExperimentalStdlibApi::class)
+@OptIn(ExperimentalStdlibApi::class)
 class RealRenderTesterTest {
 
   private interface OutputWhateverChild : Workflow<Unit, Unit, Unit>

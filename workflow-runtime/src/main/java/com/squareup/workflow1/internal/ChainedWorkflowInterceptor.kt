@@ -1,14 +1,12 @@
 package com.squareup.workflow1.internal
 
 import com.squareup.workflow1.BaseRenderContext
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.NoopWorkflowInterceptor
 import com.squareup.workflow1.Snapshot
 import com.squareup.workflow1.WorkflowInterceptor
 import com.squareup.workflow1.WorkflowInterceptor.WorkflowSession
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalWorkflowApi::class)
 internal fun List<WorkflowInterceptor>.chained(): WorkflowInterceptor =
   when {
     isEmpty() -> NoopWorkflowInterceptor
@@ -16,7 +14,6 @@ internal fun List<WorkflowInterceptor>.chained(): WorkflowInterceptor =
     else -> ChainedWorkflowInterceptor(this)
   }
 
-@OptIn(ExperimentalWorkflowApi::class)
 internal class ChainedWorkflowInterceptor(
   private val interceptors: List<WorkflowInterceptor>
 ) : WorkflowInterceptor {

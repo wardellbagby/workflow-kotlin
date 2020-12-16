@@ -3,7 +3,6 @@
 
 package com.squareup.workflow1
 
-import com.squareup.workflow1.WorkflowAction.Updater
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -59,7 +58,6 @@ public fun <T1, T2> Sink<T1>.contraMap(transform: (T2) -> T1): Sink<T2> {
  * }
  * ```
  */
-@ExperimentalWorkflowApi
 internal suspend fun <T, PropsT, StateT, OutputT> Flow<T>.collectToSink(
   actionSink: Sink<WorkflowAction<PropsT, StateT, OutputT>>,
   handler: (T) -> WorkflowAction<PropsT, StateT, OutputT>
@@ -81,7 +79,6 @@ internal suspend fun <T, PropsT, StateT, OutputT> Flow<T>.collectToSink(
  *
  * This method is intended to be used from [RenderContext.runningSideEffect].
  */
-@ExperimentalWorkflowApi
 internal suspend fun <
     PropsT,
     StateT,

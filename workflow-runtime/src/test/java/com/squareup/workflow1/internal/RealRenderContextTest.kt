@@ -2,7 +2,6 @@
 
 package com.squareup.workflow1.internal
 
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.Sink
 import com.squareup.workflow1.Snapshot
 import com.squareup.workflow1.StatefulWorkflow
@@ -28,7 +27,6 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-@OptIn(ExperimentalWorkflowApi::class)
 class RealRenderContextTest {
 
   private class TestRenderer : Renderer<String, String, String> {

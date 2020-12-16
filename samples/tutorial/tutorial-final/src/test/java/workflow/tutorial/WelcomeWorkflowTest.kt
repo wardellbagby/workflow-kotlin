@@ -8,7 +8,6 @@ import workflow.tutorial.WelcomeWorkflow.LoggedIn
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalWorkflowApi::class)
 class WelcomeWorkflowTest {
 
   // region Actions

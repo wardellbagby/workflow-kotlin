@@ -9,7 +9,6 @@ import workflow.tutorial.TodoEditWorkflow.State
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalWorkflowApi::class)
 class TodoEditWorkflowTest {
 
   // Start with a todo of "Title" "Note"

@@ -18,7 +18,6 @@ import kotlin.test.fail
 @OptIn(
     ExperimentalCoroutinesApi::class,
     ExperimentalStdlibApi::class,
-    ExperimentalWorkflowApi::class
 )
 class SinkTest {
 

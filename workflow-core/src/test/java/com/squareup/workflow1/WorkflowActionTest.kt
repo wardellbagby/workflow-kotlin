@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@OptIn(ExperimentalWorkflowApi::class)
 class WorkflowActionTest {
 
   @Test fun `applyTo works when no output is set`() {

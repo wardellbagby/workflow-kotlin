@@ -85,7 +85,6 @@ class SimpleLoggingWorkflowInterceptorTest {
     }
   }
 
-  @OptIn(ExperimentalWorkflowApi::class)
   private object TestWorkflowSession : WorkflowSession {
     @OptIn(ExperimentalStdlibApi::class)
     override val identifier: WorkflowIdentifier = unsnapshottableIdentifier(typeOf<Unit>())

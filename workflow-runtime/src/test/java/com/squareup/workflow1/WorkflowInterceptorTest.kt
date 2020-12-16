@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertSame
 import kotlin.test.fail
 
-@OptIn(ExperimentalWorkflowApi::class)
 class WorkflowInterceptorTest {
 
   @Test fun `intercept() returns workflow when Noop`() {

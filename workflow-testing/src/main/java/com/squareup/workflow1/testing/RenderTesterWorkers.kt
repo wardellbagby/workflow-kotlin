@@ -1,6 +1,5 @@
 package com.squareup.workflow1.testing
 
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.Worker
 import com.squareup.workflow1.WorkflowAction
 import com.squareup.workflow1.WorkflowOutput
@@ -104,7 +103,6 @@ public inline fun <
  * @param description Optional string that will be used to describe this expectation in error
  * messages.
  */
-@OptIn(ExperimentalWorkflowApi::class)
 /* ktlint-disable parameter-list-wrapping */
 public inline fun <PropsT, StateT, OutputT, RenderingT, WorkerOutputT, WorkerT : Worker<WorkerOutputT>>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorker(
@@ -144,7 +142,7 @@ public inline fun <PropsT, StateT, OutputT, RenderingT, WorkerOutputT, WorkerT :
  * @param description Optional string that will be used to describe this expectation in error
  * messages.
  */
-@OptIn(ExperimentalWorkflowApi::class, ExperimentalStdlibApi::class)
+@OptIn(ExperimentalStdlibApi::class)
 /* ktlint-disable parameter-list-wrapping */
 public fun <PropsT, StateT, OutputT, RenderingT>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorker(
@@ -189,7 +187,6 @@ public fun <PropsT, StateT, OutputT, RenderingT>
  * string, passed to [runningWorker][com.squareup.workflow.runningWorker], and returns true if the
  * worker matches the expectation.
  */
-@OptIn(ExperimentalWorkflowApi::class)
 /* ktlint-disable parameter-list-wrapping */
 internal fun <PropsT, StateT, OutputT, RenderingT>
     RenderTester<PropsT, StateT, OutputT, RenderingT>.expectWorker(

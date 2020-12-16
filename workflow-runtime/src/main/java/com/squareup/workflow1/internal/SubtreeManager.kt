@@ -1,6 +1,5 @@
 package com.squareup.workflow1.internal
 
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.NoopWorkflowInterceptor
 import com.squareup.workflow1.TreeSnapshot
 import com.squareup.workflow1.Workflow
@@ -80,7 +79,6 @@ import kotlin.coroutines.CoroutineContext
  *
  * @param snapshotCache
  */
-@OptIn(ExperimentalWorkflowApi::class)
 internal class SubtreeManager<PropsT, StateT, OutputT>(
   snapshotCache: Map<WorkflowNodeId, TreeSnapshot>?,
   private val contextForChildren: CoroutineContext,

@@ -14,11 +14,9 @@ import com.squareup.tracing.TraceEvent.ObjectDestroyed
 import com.squareup.tracing.TraceEvent.ObjectSnapshot
 import com.squareup.tracing.TraceLogger
 import com.squareup.workflow1.BaseRenderContext
-import com.squareup.workflow1.ExperimentalWorkflowApi
 import com.squareup.workflow1.Sink
 import com.squareup.workflow1.Snapshot
 import com.squareup.workflow1.WorkflowAction
-import com.squareup.workflow1.WorkflowAction.Updater
 import com.squareup.workflow1.WorkflowInterceptor
 import com.squareup.workflow1.WorkflowInterceptor.WorkflowSession
 import com.squareup.workflow1.WorkflowOutput
@@ -88,7 +86,6 @@ internal fun provideLogger(
  *
  * @constructor The primary constructor is internal so that it can inject [GcDetector] for tests.
  */
-@OptIn(ExperimentalWorkflowApi::class)
 public class TracingWorkflowInterceptor internal constructor(
   private val memoryStats: MemoryStats,
   private val gcDetectorConstructor: GcDetectorConstructor,
