@@ -22,7 +22,7 @@ internal class DecorativeViewFactoryTest {
         contextForNewView: Context,
         container: ViewGroup?
       ): View = InnerView(contextForNewView).apply {
-        bindShowRendering(initialRendering, initialViewEnvironment) { rendering, _ ->
+        bindShowRendering<InnerRendering> { rendering, _ ->
           events += "inner showRendering $rendering"
         }
       }
@@ -38,10 +38,9 @@ internal class DecorativeViewFactoryTest {
         val enhancedEnv = env + (envString to "Updated environment")
         Pair(outer.wrapped, enhancedEnv)
       },
-      initializeView = {
-        val outerRendering = getRendering<OuterRendering>()
-        events += "initializeView $outerRendering ${environment!![envString]}"
-        showFirstRendering()
+      initializeView = { r, e ->
+        events += "initializeView $r ${e[envString]}"
+        showRendering(r, e)
         events += "exit initializeView"
       }
     )
@@ -73,7 +72,7 @@ internal class DecorativeViewFactoryTest {
         contextForNewView: Context,
         container: ViewGroup?
       ): View = InnerView(contextForNewView).apply {
-        bindShowRendering(initialRendering, initialViewEnvironment) { rendering, _ ->
+        bindShowRendering<InnerRendering> { rendering, _ ->
           events += "inner showRendering $rendering"
         }
       }
@@ -112,7 +111,7 @@ internal class DecorativeViewFactoryTest {
         contextForNewView: Context,
         container: ViewGroup?
       ): View = InnerView(contextForNewView).apply {
-        bindShowRendering(initialRendering, initialViewEnvironment) { rendering, _ ->
+        bindShowRendering<InnerRendering> { rendering, _ ->
           events += "inner showRendering $rendering"
         }
       }

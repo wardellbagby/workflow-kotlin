@@ -91,12 +91,12 @@ public abstract class AbstractLifecycleTestActivity : WorkflowUiTestActivity() {
     viewObserver: ViewObserver<R>,
     viewConstructor: (Context) -> LeafView<R> = ::LeafView
   ): ViewFactory<R> =
-    BuilderViewFactory(type) { initialRendering, initialViewEnvironment, contextForNewView, _ ->
+    BuilderViewFactory(type) { initialRendering, _, contextForNewView, _ ->
       viewConstructor(contextForNewView).apply {
         this.viewObserver = viewObserver
         viewObserver.onViewCreated(this, initialRendering)
 
-        bindShowRendering(initialRendering, initialViewEnvironment) { rendering, _ ->
+        bindShowRendering<R> { rendering, _ ->
           this.rendering = rendering
           viewObserver.onShowRendering(this, rendering)
         }

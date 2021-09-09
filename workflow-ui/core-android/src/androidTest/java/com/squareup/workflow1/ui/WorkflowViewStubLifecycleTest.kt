@@ -257,14 +257,14 @@ internal class WorkflowViewStubLifecycleTest {
     data class RegistrySetter(val wrapped: TestRendering) : ViewRendering<RegistrySetter>() {
       override val viewFactory: ViewFactory<RegistrySetter> = BuilderViewFactory(
         RegistrySetter::class
-      ) { initialRendering, initialViewEnvironment, context, _ ->
+      ) { _, _, context, _ ->
         val stub = WorkflowViewStub(context)
         ViewTreeSavedStateRegistryOwner.set(stub, expectedRegistryOwner)
 
         FrameLayout(context).apply {
           addView(stub)
 
-          bindShowRendering(initialRendering, initialViewEnvironment) { r, e ->
+          bindShowRendering<RegistrySetter> { r, e ->
             stub.update(r.wrapped, e)
           }
         }
@@ -300,7 +300,7 @@ internal class WorkflowViewStubLifecycleTest {
 
     override val viewFactory: ViewFactory<CounterRendering> = BuilderViewFactory(
       CounterRendering::class
-    ) { initialRendering, initialViewEnvironment, context, _ ->
+    ) { _, _, context, _ ->
       var counter = 0
       Button(context).apply button@{
         tag = Tag
@@ -349,7 +349,7 @@ internal class WorkflowViewStubLifecycleTest {
           updateText()
         }
 
-        bindShowRendering(initialRendering, initialViewEnvironment) { _, _ ->
+        bindShowRendering<CounterRendering> { _, _ ->
           // Noop
         }
       }
