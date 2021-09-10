@@ -9,11 +9,11 @@ import com.nhaarman.mockito_kotlin.mock
 import kotlin.reflect.KClass
 
 @OptIn(WorkflowUiExperimentalApi::class)
-fun <R : Any> ViewRegistry.buildView(rendering: R): View =
-  buildView(rendering, ViewEnvironment(mapOf(ViewRegistry to this)), mock<Context>())
+internal fun <R : Any> ViewRegistry.buildView(rendering: R): View =
+  ViewEnvironment(mapOf(ViewRegistry to this)).buildView(rendering, mock())
 
 @OptIn(WorkflowUiExperimentalApi::class)
-class TestViewFactory<R : Any>(override val type: KClass<R>) : ViewFactory<R> {
+internal class TestViewFactory<R : Any>(override val type: KClass<R>) : ViewFactory<R> {
   var called = false
 
   override fun buildView(

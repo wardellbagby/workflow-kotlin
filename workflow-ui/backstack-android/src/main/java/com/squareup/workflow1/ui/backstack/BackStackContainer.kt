@@ -19,10 +19,9 @@ import com.squareup.workflow1.ui.BuilderViewFactory
 import com.squareup.workflow1.ui.Named
 import com.squareup.workflow1.ui.ViewEnvironment
 import com.squareup.workflow1.ui.ViewFactory
-import com.squareup.workflow1.ui.ViewRegistry
+import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 import com.squareup.workflow1.ui.androidx.WorkflowAndroidXSupport.stateRegistryOwnerFromViewTreeOrContext
 import com.squareup.workflow1.ui.androidx.WorkflowLifecycleOwner
-import com.squareup.workflow1.ui.WorkflowUiExperimentalApi
 import com.squareup.workflow1.ui.backstack.BackStackConfig.First
 import com.squareup.workflow1.ui.backstack.BackStackConfig.Other
 import com.squareup.workflow1.ui.bindShowRendering
@@ -93,9 +92,8 @@ public open class BackStackContainer @JvmOverloads constructor(
         return
       }
 
-    val newView = environment[ViewRegistry].buildView(
+    val newView = environment.buildView(
       initialRendering = named.top,
-      initialViewEnvironment = environment,
       contextForNewView = this.context,
       container = this,
       initializeView = {
