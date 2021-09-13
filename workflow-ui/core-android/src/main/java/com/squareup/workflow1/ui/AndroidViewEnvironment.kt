@@ -1,5 +1,6 @@
 package com.squareup.workflow1.ui
 
+import android.app.Dialog
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -94,6 +95,32 @@ public fun <RenderingT : Any> ViewEnvironment.buildView(
   }
 }
 
+@WorkflowUiExperimentalApi
+public fun <RenderingT : Any> ViewEnvironment.buildDialog(
+  initialRendering: RenderingT,
+  context: Context
+): Dialog {
+  val builder = get(ViewRegistry).getEntryFor(initialRendering::class)
+  require(builder is DialogFactory<RenderingT>) {
+    "A ${DialogFactory::class.java.name} should have been registered " +
+      "to display a ${this::class}, instead found $builder."
+  }
+
+  return builder
+    .buildDialog(
+      initialRendering,
+      this,
+      context
+    )
+    .apply {
+      // TODO this isn't safe, we can't call decorView before show. If there is nowhere else
+      // we can hang state off of a Dialog, have to return a wrapper instead. Groan.
+      checkNotNull(window!!.decorView.showRenderingTag) {
+        "Dialog.bindShowRendering should have been called for $this, typically by the " +
+          "${DialogFactory::class.java.name} that created it."
+      }
+    }
+}
 /**
  * Default implementation for the `initializeView` argument of [ViewEnvironment.buildView],
  * and for [DecorativeViewFactory.initializeView]. Calls [showRendering] against

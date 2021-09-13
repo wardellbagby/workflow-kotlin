@@ -1,5 +1,6 @@
 package com.squareup.workflow1.ui
 
+import android.app.Dialog
 import android.view.View
 
 /**
@@ -40,6 +41,25 @@ public fun <RenderingT : Any> View.bindShowRendering(
   showRendering: ViewShowRendering<RenderingT>
 ) {
   setTag(
+    R.id.view_show_rendering_function,
+    ShowRenderingTag(initialRendering, initialViewEnvironment, showRendering)
+  )
+}
+
+/**
+ * Establishes [showRendering] as the implementation of [Dialog.showRendering]
+ * for the receiver, possibly replacing the existing one. Likewise sets / updates
+ * the values returned by [View.getRendering] and [View.environment].
+ *
+ * Intended for use by implementations of [DialogFactory.buildDialog].
+ */
+@WorkflowUiExperimentalApi
+public fun <RenderingT : Any> Dialog.bindShowRendering(
+  initialRendering: RenderingT,
+  initialViewEnvironment: ViewEnvironment,
+  showRendering: ViewShowRendering<RenderingT>
+) {
+  window!!.decorView.setTag(
     R.id.view_show_rendering_function,
     ShowRenderingTag(initialRendering, initialViewEnvironment, showRendering)
   )
@@ -89,6 +109,36 @@ public fun <RenderingT : Any> View.showRendering(
       "Expected $this to have a showRendering function to show $rendering. " +
         "Perhaps it was not built by a ${ViewFactory::class.java.simpleName}, " +
         "or perhaps the factory did not call View.bindShowRendering."
+    )
+}
+
+/**
+ * Sets the workflow rendering associated with this [Dialog], and displays it by
+ * invoking the [ViewShowRendering] function previously set by [Dialog.bindShowRendering].
+ *
+ * @throws IllegalStateException if [Dialog.bindShowRendering] has not been called.
+ */
+@WorkflowUiExperimentalApi
+public fun <RenderingT : Any> Dialog.showRendering(
+  rendering: RenderingT,
+  viewEnvironment: ViewEnvironment
+) {
+  // TODO: it's not safe to call decorView before Dialog.show. Move the show call here?
+
+  window!!.decorView.showRenderingTag
+    ?.let { tag ->
+      check(tag.showing.matches(rendering)) {
+        "Expected $this to be able to display rendering $rendering, but that did not match " +
+          "previous rendering ${tag.showing}. "
+      }
+
+      bindShowRendering(rendering, viewEnvironment, tag.showRendering)
+    }
+    ?: error(
+      "Expected $this to have a showRendering function to display $rendering. " +
+        "Perhaps it was not built by a ${DialogFactory::class.java.simpleName}, " +
+        "or perhaps its ${DialogFactory::class.java.simpleName} did not call" +
+        "Dialog.bindShowRendering."
     )
 }
 
