@@ -107,7 +107,7 @@ import kotlin.reflect.KClass
  * [showRendering], [getRendering] and [environment] are all available when this is called.
  * Defaults to a call to [View.showFirstRendering].
  *
- * @param doShowRendering called to apply the [ViewShowRendering] function for
+ * @param doShowRendering called to apply the [ShowRendering] function for
  * [InnerT], allowing pre- and post-processing. Default implementation simply
  * uses [map] to extract the [InnerT] instance from [OuterT] and makes the function call.
  */
@@ -118,7 +118,7 @@ public class DecorativeViewFactory<OuterT : Any, InnerT : Any>(
   private val initializeView: View.() -> Unit = { showFirstRendering() },
   private val doShowRendering: (
     view: View,
-    innerShowRendering: ViewShowRendering<InnerT>,
+    innerShowRendering: ShowRendering<InnerT>,
     outerRendering: OuterT,
     env: ViewEnvironment
   ) -> Unit = { _, innerShowRendering, outerRendering, viewEnvironment ->
@@ -136,7 +136,7 @@ public class DecorativeViewFactory<OuterT : Any, InnerT : Any>(
     initializeView: View.() -> Unit = { showFirstRendering() },
     doShowRendering: (
       view: View,
-      innerShowRendering: ViewShowRendering<InnerT>,
+      innerShowRendering: ShowRendering<InnerT>,
       outerRendering: OuterT,
       env: ViewEnvironment
     ) -> Unit = { _, innerShowRendering, outerRendering, viewEnvironment ->
@@ -166,7 +166,7 @@ public class DecorativeViewFactory<OuterT : Any, InnerT : Any>(
         initializeView = { }
       )
       .also { view ->
-        val innerShowRendering: ViewShowRendering<InnerT> = view.getShowRendering()!!
+        val innerShowRendering: ShowRendering<InnerT> = view.getShowRendering()!!
 
         view.bindShowRendering(
           initialRendering,
