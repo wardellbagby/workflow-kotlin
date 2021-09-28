@@ -3,18 +3,16 @@ import com.squareup.sample.helloworkflow.HelloWorkflow
 import kotlinx.browser.document
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
+import react.RProps
 import react.ReactElement
+import react.child
 import react.dom.h1
 import react.dom.render
+import react.functionalComponent
 
 fun main() {
   render(document.getElementById("app")) {
-    app.invoke {
-      attrs {
-        workflowProps = Unit
-        workflow = HelloWorkflow(::HelloJSRendering)
-      }
-    }
+    child(app)
   }
 }
 
@@ -35,6 +33,11 @@ class HelloJSRendering(
   }
 }
 
-val app = workflow<Unit, Nothing, HelloJSRendering>("app")
+val app = functionalComponent<RProps> {
+  Workflow(
+    workflow = HelloWorkflow(renderingFactory = ::HelloJSRendering),
+    props = Unit
+  )
+}
 
 

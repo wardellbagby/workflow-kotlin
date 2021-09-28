@@ -4,14 +4,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.job
 import react.RBuilder
 import react.RProps
-import react.rFunction
+import react.functionalComponent
 import react.useEffectWithCleanup
 import react.useMemo
 
 internal fun <Props : RProps> scopedComponent(
   name: String,
   render: RBuilder.(Props, scope: CoroutineScope) -> Unit
-) = rFunction<Props>(name) { props ->
+) = functionalComponent<Props>(name) { props ->
   val scope = useMemo(callback = { CoroutineScope(Job()) }, arrayOf())
 
   useEffectWithCleanup(listOf()) {
