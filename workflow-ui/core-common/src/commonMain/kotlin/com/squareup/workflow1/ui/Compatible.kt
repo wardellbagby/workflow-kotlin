@@ -42,7 +42,7 @@ public interface Compatible {
       value: Any,
       name: String = ""
     ): String {
-      return ((value as? Compatible)?.compatibilityKey ?: value::class.qualifiedName) +
+      return ((value as? Compatible)?.compatibilityKey ?: value::class.toString()) +
         if (name.isEmpty()) "" else "+$name"
     }
   }

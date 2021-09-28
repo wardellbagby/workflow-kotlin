@@ -90,7 +90,7 @@ private class EmitWorkerOutputAction<P, S, O>(
   private val output: O
 ) : WorkflowAction<P, S, O>() {
   override fun toString(): String =
-    "${EmitWorkerOutputAction::class.qualifiedName}(worker=$worker, key=\"$renderKey\")"
+    "com.squareup.workflow1.EmitWorkerOutputAction(worker=$worker, key=\"$renderKey\")"
 
   override fun Updater.apply() {
     setOutput(output)
