@@ -26,6 +26,7 @@ include(
     ":samples:tictactoe:app",
     ":samples:tictactoe:common",
     ":samples:tictactoe-multiplatform:app",
+    ":samples:tictactoe-multiplatform:browser",
     ":samples:tictactoe-multiplatform:shared",
     ":samples:todo-android:app",
     ":samples:todo-android:common",

@@ -7,6 +7,9 @@ version = 1.0
 
 kotlin {
   jvm()
+  js {
+    browser()
+  }
   iosX64()
 
   sourceSets {
@@ -25,9 +28,10 @@ kotlin {
 
   sourceSets["commonMain"].dependencies {
     api(project(":workflow-core"))
-    implementation(project(":workflow-ui:backstack-common"))
-    implementation(project(":workflow-ui:modal-common"))
-    implementation(project(":samples:containers:common"))
+    api(project(":workflow-ui:backstack-common"))
+    api(project(":workflow-ui:modal-common"))
+    api(project(":samples:containers:common"))
+
     implementation(Dependencies.Kotlin.Coroutines.core)
     implementation(Dependencies.stately)
     implementation(Dependencies.kermit)
