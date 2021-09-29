@@ -3,6 +3,9 @@ plugins {
 }
 kotlin {
   jvm()
+  js {
+    browser()
+  }
   iosX64()
 
   sourceSets {

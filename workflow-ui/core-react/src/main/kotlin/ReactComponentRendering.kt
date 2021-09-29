@@ -2,5 +2,5 @@ import react.RBuilder
 import react.ReactElement
 
 interface ReactComponentRendering {
-  val componentFactory: RBuilder.() -> ReactElement
+  val componentFactory: RBuilder.() -> Unit
 }

@@ -8,6 +8,9 @@ kotlin {
   jvm {
     withJava()
   }
+  js {
+    browser()
+  }
   iosX64()
   sourceSets {
     val commonMain by getting {

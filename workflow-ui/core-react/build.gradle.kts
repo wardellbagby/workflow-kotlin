@@ -21,8 +21,9 @@ dependencies {
   api(project(":workflow-ui:core-common"))
   api(project(":workflow-runtime"))
 
-  api("org.jetbrains:kotlin-react:17.0.2-pre.154-kotlin-1.5.0")
-  api("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.5.0")
+  api("org.jetbrains.kotlin-wrappers:kotlin-react:17.0.2-pre.236-kotlin-1.5.30")
+  api("org.jetbrains.kotlin-wrappers:kotlin-react-dom:17.0.2-pre.236-kotlin-1.5.30")
+
 
   implementation(Dependencies.Kotlin.Coroutines.core)
   implementation(npm("react", "17.0.2"))
